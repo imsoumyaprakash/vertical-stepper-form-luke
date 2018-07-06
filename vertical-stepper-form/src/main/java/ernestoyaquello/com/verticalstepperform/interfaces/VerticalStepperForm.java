@@ -28,7 +28,7 @@ public interface VerticalStepperForm {
      +     * @param stepNumber the number of the step
      +     * @return return true will go on next step otherwise stay on same step
      +     */
-    boolean onContinue(int stepNumber);
+    void onContinue(int stepNumber);
 
     /**
      * This method will be called when the user press the confirmation button
