@@ -1,5 +1,6 @@
 package ernestoyaquello.com.verticalstepperform;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.ColorStateList;
@@ -28,6 +29,8 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.view.ViewGroup;
+import android.view.ViewParent;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -553,7 +556,11 @@ public class VerticalStepperFormLayout extends RelativeLayout implements View.On
         LinearLayout stepLayout = createStepLayout(stepNumber);
         if (stepNumber < numberOfSteps) {
             // The content of the step is the corresponding custom view previously created
-            RelativeLayout stepContent = (RelativeLayout) stepLayout.findViewById(R.id.step_content);
+            RelativeLayout stepContent = stepLayout.findViewById(R.id.step_content);
+                        ViewParent viewParent = stepContentViews.get(stepNumber).getParent();
+                        // Check if it has a view parent.
+                                if(viewParent != null)
+                                ((ViewGroup) viewParent).removeView(stepContentViews.get(stepNumber));
             stepContent.addView(stepContentViews.get(stepNumber));
         } else {
             setUpStepLayoutAsConfirmationStepLayout(stepLayout);
@@ -940,6 +947,7 @@ public class VerticalStepperFormLayout extends RelativeLayout implements View.On
         circle.setBackground(bg);
     }
 
+    @SuppressLint("RestrictedApi")
     protected void setButtonColor(AppCompatButton button, int buttonColor, int buttonTextColor,
                                   int buttonPressedColor, int buttonPressedTextColor) {
         int[][] states = new int[][]{
